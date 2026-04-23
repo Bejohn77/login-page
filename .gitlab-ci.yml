@@ -1,0 +1,28 @@
+stages:
+  - build
+  - docker
+  - deploy
+
+variables:
+  IMAGE_NAME: login-page
+
+build:
+  stage: build
+  script:
+    - echo "Build step done"
+
+docker_build:
+  stage: docker
+  script:
+    - docker build -t $DOCKER_USER/$IMAGE_NAME:latest .
+
+docker_push:
+  stage: docker
+  script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - docker push $DOCKER_USER/$IMAGE_NAME:latest
+
+deploy:
+  stage: deploy
+  script:
+    - kubectl apply -f k8s/deployment.yaml

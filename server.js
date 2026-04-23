@@ -31,6 +31,6 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.listen(port, () => {
-  console.log(`Login microservice listening on http://localhost:${port}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Login microservice listening on port ${port}`);
 });
